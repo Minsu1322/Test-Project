@@ -1,4 +1,4 @@
-###Tailwind CSS를 활용해 UI 디자인을 제작했으며, React 및 Next.js를 기반으로 동작합니다.
+### Tailwind CSS를 활용해 UI 디자인을 제작했으며, React 및 Next.js를 기반으로 동작합니다.
 
 Frontend: React, Next.js, TypeScript
 DataBase: Supabase Database
