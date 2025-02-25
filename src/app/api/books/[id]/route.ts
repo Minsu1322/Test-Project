@@ -1,5 +1,3 @@
-// src/app/api/books/[id]/route.ts
-
 import { supabase } from "@/app/supabase/supabaseClient";
 
 export async function GET(

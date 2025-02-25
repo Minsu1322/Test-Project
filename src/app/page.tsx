@@ -20,8 +20,8 @@ const Books: React.FC = () => {
     error,
     isLoading,
   } = useQuery<Book[], Error>({
-    queryKey: ["books"], // 쿼리의 고유 키
-    queryFn: fetchBooks, // 데이터를 가져오는 함수
+    queryKey: ["books"],
+    queryFn: fetchBooks,
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -59,7 +59,7 @@ const Books: React.FC = () => {
                   </div>
                   <div className="flex items-center">
                     <p className="text-lg font-medium text-gray-800 mr-3">
-                      ${book.price}
+                      \{book.price}
                     </p>
                     <button className="p-2 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition-colors">
                       <ShoppingCart size={20} />
