@@ -22,7 +22,7 @@ export async function GET(request: Request) {
       .select("*")
       .ilike(searchOption, `%${searchTerm}%`)
       .range((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE - 1)
-      .order("created_at", { ascending: true });
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
 
@@ -31,6 +31,50 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json(
       { message: "Error loading books" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  const supabase = createClient();
+
+  try {
+    const bookData = await request.json();
+
+    if (!bookData.title || !bookData.author) {
+      return NextResponse.json(
+        { message: "Title and author are required" },
+        { status: 400 }
+      );
+    }
+
+    if (!bookData.created_at) {
+      bookData.created_at = new Date().toISOString();
+    }
+
+    if (bookData.price && typeof bookData.price !== "number") {
+      return NextResponse.json(
+        { message: "Price must be a number" },
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await supabase
+      .from("books")
+      .insert([bookData])
+      .select();
+
+    if (error) throw error;
+
+    return NextResponse.json(
+      { message: "Book created successfully", book: data[0] },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Error creating book:", error);
+    return NextResponse.json(
+      { message: "Error creating book" },
       { status: 500 }
     );
   }
