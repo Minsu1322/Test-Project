@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+###Tailwind CSS를 활용해 UI 디자인을 제작했으며, React 및 Next.js를 기반으로 동작합니다.
 
-## Getting Started
+Frontend: React, Next.js, TypeScript
+DataBase: Supabase Database
+Styling: Tailwind CSS
+Icons: Lucide-react
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+####주요 기능
+책 목록 조회
+모든 책을 목록에서 확인할 수 있습니다.
+페이지네이션(10개) 적용.
+개별 책을 클릭하면 상세 페이지로 이동합니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+####검색
+제목 또는 저자명으로 책을 검색할 수 있습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+####등록
+새로운 책을 제목, 저자, 가격과 함께 등록할 수 있습니다.
+책 등록 폼을 열고 닫을 수 있습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+##프로젝트구조
+📂 project-root
+ ├── 📁 app
+ │   ├── 📁api  # 데이터베이스와 통신하는 api관련 route.ts파일 관리
+ │   │   ├── 📁book  책과 관련된 route관리
+ │   │   │   ├── route.ts 메인 홈페이지 route.ts파일
+ │   │   ├── 📁 [id]
+ │   │   │   ├── route.ts  상세페이지 동적라우팅 route.ts파일
+ ├── 📁 book
+ │   ├── 📁 [id]        # 상세페이지
+ │   ├── page.tsx       # 메인 페이지
+ ├── 📁 components      # 로딩컴포넌트 외 추후 유지보수할시 사용할 컴포넌트 폴더
+ ├── 📁 styles          # Tailwind 설정
+ ├── 📁 supabase        # supabase 데이터베이스 설정
+ ├── 📁 types           # 타입을 관리하는 폴더
+ ├── 📄 package.json    # 프로젝트 의존성 정보
+ ├── 📄 README.md       # 프로젝트 문서
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### `books` 테이블 설계
 
-## Deploy on Vercel
+| 컬럼 이름    | 데이터 타입   | 설명                          |
+|--------------|---------------|-------------------------------|
+| `id`         | UUID          | 책의 고유 식별자 (Primary Key) |
+| `title`      | TEXT          | 책 제목                       |
+| `author`     | TEXT          | 책 저자                       |
+| `price`      | INTEGER       | 책 가격                       |
+| `details`    | TEXT          | 책 줄거리                     |
+| `created_at` | TIMESTAMP     | 책이 등록된 날짜              |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
