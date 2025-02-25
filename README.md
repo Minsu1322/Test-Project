@@ -21,7 +21,10 @@ Icons: Lucide-react
 
 
 ##프로젝트구조
+
+
 ![image](https://github.com/user-attachments/assets/139554f2-f61c-4a23-81e9-6b14f7cc809e)
+
 
 
 
