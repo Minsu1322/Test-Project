@@ -1,4 +1,5 @@
 "use client";
+import Spinner from "@/app/components/LoadingSpinner";
 import Book from "@/types/TypeOfBooks";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -28,7 +29,7 @@ export default function BookDetail({
     queryFn: () => fetchBookDetails(id),
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner />;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
   if (!book) return <div>Book not found</div>;
 

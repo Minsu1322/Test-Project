@@ -3,11 +3,15 @@ import Book from "@/types/TypeOfBooks";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Book as BookIcon, ShoppingCart, ChevronRight } from "lucide-react";
+import Spinner from "./components/LoadingSpinner";
+import { useState } from "react";
 
 // Book 타입 정의
 
-const fetchBooks = async (): Promise<Book[]> => {
-  const response = await fetch("/api/books");
+const fetchBooks = async (
+  page: number
+): Promise<{ books: Book[]; totalCount: number }> => {
+  const response = await fetch(`/api/books?page=${page}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -15,16 +19,23 @@ const fetchBooks = async (): Promise<Book[]> => {
 };
 
 const Books: React.FC = () => {
+  const [page, setPage] = useState(1);
   const {
-    data: books,
+    data: { books, totalCount } = { books: [], totalCount: 0 },
     error,
     isLoading,
-  } = useQuery<Book[], Error>({
-    queryKey: ["books"],
-    queryFn: fetchBooks,
+  } = useQuery({
+    queryKey: ["books", page],
+    queryFn: () => fetchBooks(page),
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  const ITEMS_PER_PAGE = 10;
+  const TOTAL_PAGES = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+  // 페이지 번호 배열 생성
+  const pageNumbers = Array.from({ length: TOTAL_PAGES }, (_, i) => i + 1);
+
+  if (isLoading) return <Spinner />;
   if (!books || books.length === 0) return <div>책이 없어요!</div>;
 
   return (
@@ -71,7 +82,22 @@ const Books: React.FC = () => {
           </div>
 
           <div className="bg-gray-50 p-4 text-center text-gray-500 text-sm">
-            총 {books.length}권의 책이 있습니다
+            총 {totalCount}권의 책이 있습니다
+          </div>
+          <div className="flex justify-center space-x-2 p-4">
+            {pageNumbers.map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => setPage(pageNumber)}
+                className={`px-4 py-2 rounded ${
+                  page === pageNumber
+                    ? "bg-indigo-600 text-white"
+                    : "bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
+                }`}
+              >
+                {pageNumber}
+              </button>
+            ))}
           </div>
         </div>
       </div>
