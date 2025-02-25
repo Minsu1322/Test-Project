@@ -66,11 +66,11 @@ export default function BookDetail({
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
   return (
-    <main className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-12 px-4">
+    <main className="bg-gradient-to-br from-slate-50 to-blue-100 min-h-screen py-12 px-4 font-sans">
       <div className="max-w-2xl mx-auto">
         <Link
           href="/"
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium mb-6 transition-colors"
+          className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium mb-6 transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -92,8 +92,8 @@ export default function BookDetail({
             <Spinner />
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-xl overflow-hidden">
-            <div className="bg-indigo-600 p-6">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 p-6">
               <h1 className="text-2xl font-bold text-white">{book?.title}</h1>
             </div>
 
@@ -106,16 +106,16 @@ export default function BookDetail({
                   </div>
                   <div className="flex items-center">
                     <span className="text-gray-500 w-24">가격</span>
-                    <span className="font-medium text-lg text-indigo-600">
+                    <span className="font-medium text-lg text-blue-600">
                       ${book?.price}
                     </span>
                   </div>
                 </div>
 
-                <div className="bg-indigo-50 rounded-lg p-4 flex items-center justify-center">
+                <div className="bg-blue-50 rounded-lg p-4 flex items-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-16 w-16 text-indigo-300"
+                    className="h-16 w-16 text-blue-300"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -144,7 +144,7 @@ export default function BookDetail({
               <div className="mt-8 flex justify-end space-x-4">
                 <button
                   onClick={handleDelete}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors flex items-center"
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center shadow-sm"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@ export default function BookDetail({
                   </svg>
                   삭제
                 </button>
-                <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors flex items-center">
+                <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center shadow-sm">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 mr-2"

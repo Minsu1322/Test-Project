@@ -109,7 +109,6 @@ const Books: React.FC = () => {
   };
 
   const handleRegisterBook = async () => {
-    // 입력 유효성 검사
     if (!newBook.title || !newBook.author) {
       setRegisterError("제목과 저자는 필수 입력사항입니다");
       return;
@@ -146,21 +145,21 @@ const Books: React.FC = () => {
   }, [activeSearchTerm, activeSearchOption, page, refetch]);
 
   return (
-    <main className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-12 px-4">
-      <div className="max-w-6xl mx-auto flex space-x-8">
-        {/* 좌측: 책 목록 */}
-        <div className="w-2/3">
-          <div className="bg-white rounded-xl shadow-xl overflow-hidden">
-            <div className="bg-indigo-600 p-6">
+    <main className="bg-gradient-to-br from-slate-50 to-blue-100 min-h-screen py-12 px-4 font-sans">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
+        {/* 좌측: 책 목록 - 심플한 디자인 */}
+        <div className="w-full md:w-2/3">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 p-6">
               <h1
-                className="text-3xl font-bold text-white flex items-center justify-center cursor-pointer hover:text-gray-200 transition-colors"
+                className="text-2xl font-bold text-white flex items-center justify-center cursor-pointer hover:text-blue-50 transition-all duration-300"
                 onClick={() => {
                   setActiveSearchTerm("");
                   setActiveSearchOption("title");
                   setPage(1);
                 }}
               >
-                <BookIcon className="mr-2" size={24} />책 목록
+                <BookIcon className="mr-3" size={24} />책 목록
               </h1>
             </div>
 
@@ -170,34 +169,34 @@ const Books: React.FC = () => {
                 <Spinner />
               </div>
             ) : books.length === 0 ? (
-              <div className="p-6 text-center text-gray-500">
+              <div className="p-8 text-center text-gray-500">
                 검색결과가 없습니다
               </div>
             ) : (
-              <div className="divide-y divide-gray-200">
+              <div className="divide-y divide-gray-100">
                 {books.map((book) => (
                   <div
                     key={book.id}
-                    className="p-6 hover:bg-gray-50 transition-colors duration-200"
+                    className="p-6 hover:bg-blue-50 transition-all duration-200"
                   >
                     <div className="flex justify-between items-center">
                       <div className="flex-1">
                         <Link href={`/books/${book.id}`} className="group">
-                          <h2 className="text-xl font-semibold text-indigo-600 group-hover:text-indigo-800 transition-colors flex items-center">
+                          <h2 className="text-xl font-semibold text-blue-600 group-hover:text-blue-700 transition-colors flex items-center">
                             {book.title}
                             <ChevronRight
                               size={18}
-                              className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1"
                             />
                           </h2>
                         </Link>
                         <p className="text-gray-600 mt-1">{book.author}</p>
                       </div>
                       <div className="flex items-center">
-                        <p className="text-lg font-medium text-gray-800 mr-3">
+                        <p className="text-lg font-medium text-gray-800 mr-4">
                           \{book.price}
                         </p>
-                        <button className="p-2 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition-colors">
+                        <button className="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors">
                           <ShoppingCart size={20} />
                         </button>
                       </div>
@@ -207,20 +206,21 @@ const Books: React.FC = () => {
               </div>
             )}
 
-            <div className="bg-gray-50 p-4 text-center text-gray-500 text-sm">
-              총 {totalCount}권의 책이 있습니다
+            <div className="bg-gray-50 p-4 text-center text-gray-600 text-sm">
+              총 <span className="font-medium">{totalCount}</span>권의 책이
+              있습니다
             </div>
 
-            {/* 페이지네이션 컨트롤 */}
-            <div className="flex justify-center space-x-2 p-4">
+            {/* 페이지네이션 컨트롤 - 심플한 스타일 */}
+            <div className="flex justify-center space-x-2 p-4 bg-white">
               {pageNumbers.map((pageNumber) => (
                 <button
                   key={pageNumber}
                   onClick={() => setPage(pageNumber)}
-                  className={`px-4 py-2 rounded ${
+                  className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${
                     page === pageNumber
-                      ? "bg-indigo-600 text-white"
-                      : "bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
+                      ? "bg-blue-500 text-white shadow-sm"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   {pageNumber}
@@ -230,31 +230,31 @@ const Books: React.FC = () => {
           </div>
         </div>
 
-        {/* 우측: 검색창 */}
-        <div className="w-1/3">
-          <div className="bg-white rounded-xl shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-indigo-600 mb-4 flex items-center">
-              <Search className="mr-2" size={20} />책 검색
+        {/* 우측: 검색창 및 등록 폼 - 심플한 디자인 */}
+        <div className="w-full md:w-1/3 space-y-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+            <h2 className="text-xl font-semibold text-blue-600 mb-4 flex items-center">
+              <Search className="mr-2 text-blue-500" size={20} />책 검색
             </h2>
             <div className="space-y-4">
               {/* 검색 옵션 선택 */}
-              <div className="flex space-x-4">
+              <div className="flex space-x-2 bg-gray-50 p-1 rounded-lg">
                 <button
                   onClick={() => setInputSearchOption("title")}
-                  className={`px-4 py-2 rounded ${
+                  className={`flex-1 px-4 py-2 rounded-md transition-all duration-200 font-medium ${
                     inputSearchOption === "title"
-                      ? "bg-indigo-600 text-white"
-                      : "bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
+                      ? "bg-blue-500 text-white"
+                      : "text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   제목
                 </button>
                 <button
                   onClick={() => setInputSearchOption("author")}
-                  className={`px-4 py-2 rounded ${
+                  className={`flex-1 px-4 py-2 rounded-md transition-all duration-200 font-medium ${
                     inputSearchOption === "author"
-                      ? "bg-indigo-600 text-white"
-                      : "bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
+                      ? "bg-blue-500 text-white"
+                      : "text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   저자
@@ -262,32 +262,38 @@ const Books: React.FC = () => {
               </div>
 
               {/* 검색 입력창 */}
-              <input
-                type="text"
-                placeholder="검색어를 입력하세요"
-                value={inputSearchTerm}
-                onChange={(e) => setInputSearchTerm(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="검색어를 입력하세요"
+                  value={inputSearchTerm}
+                  onChange={(e) => setInputSearchTerm(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+                />
+                <div className="absolute right-3 top-3 text-gray-400">
+                  <Search size={20} />
+                </div>
+              </div>
 
               {/* 검색 버튼 */}
               <button
                 onClick={handleSearch}
-                className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                className="w-full px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 font-medium shadow-sm"
               >
                 검색
               </button>
             </div>
           </div>
-          <div className="bg-white rounded-xl shadow-xl p-6">
+
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-indigo-600 flex items-center">
-                <PlusCircle className="mr-2" size={20} />책 등록
+              <h2 className="text-xl font-semibold text-blue-600 flex items-center">
+                <PlusCircle className="mr-2 text-blue-500" size={20} />책 등록
               </h2>
               <button
                 onClick={() => setShowRegisterForm(!showRegisterForm)}
-                className="text-sm text-indigo-600 hover:text-indigo-800"
+                className="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md hover:bg-blue-50 transition-all duration-200"
               >
                 {showRegisterForm ? "닫기" : "등록하기"}
               </button>
@@ -308,7 +314,7 @@ const Books: React.FC = () => {
                     name="title"
                     value={newBook.title}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
                     placeholder="책 제목"
                   />
                 </div>
@@ -326,7 +332,7 @@ const Books: React.FC = () => {
                     name="author"
                     value={newBook.author}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
                     placeholder="저자명"
                   />
                 </div>
@@ -344,7 +350,7 @@ const Books: React.FC = () => {
                     name="price"
                     value={newBook.price}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
                     placeholder="가격"
                     min="0"
                   />
@@ -362,20 +368,20 @@ const Books: React.FC = () => {
                     name="details"
                     value={newBook.details || ""}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
                     placeholder="책 줄거리"
                     rows={4}
                   />
                 </div>
 
                 {registerError && (
-                  <div className="p-3 bg-red-100 text-red-600 rounded-lg text-sm">
+                  <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm border border-red-100">
                     {registerError}
                   </div>
                 )}
 
                 {registerSuccess && (
-                  <div className="p-3 bg-green-100 text-green-600 rounded-lg text-sm">
+                  <div className="p-3 bg-green-50 text-green-600 rounded-lg text-sm border border-green-100">
                     책이 성공적으로 등록되었습니다!
                   </div>
                 )}
@@ -383,14 +389,40 @@ const Books: React.FC = () => {
                 <button
                   onClick={handleRegisterBook}
                   disabled={registering}
-                  className="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-indigo-400"
+                  className="w-full px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 font-medium shadow-sm disabled:bg-blue-300 disabled:cursor-not-allowed"
                 >
-                  {registering ? "등록 중..." : "등록하기"}
+                  {registering ? (
+                    <span className="flex items-center justify-center">
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      등록 중...
+                    </span>
+                  ) : (
+                    "등록하기"
+                  )}
                 </button>
               </div>
             )}
             {!showRegisterForm && (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 bg-gray-50 p-3 rounded-lg">
                 새 책을 등록하려면 '등록하기' 버튼을 클릭하세요.
               </p>
             )}
