@@ -5,18 +5,22 @@ export async function GET(request: Request) {
   const ITEMS_PER_PAGE = 10;
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1", 10);
+  const searchTerm = searchParams.get("searchTerm") || "";
+  const searchOption = searchParams.get("searchOption") || "title";
   const supabase = createClient();
 
   try {
     // 총 책 수 가져오기
     const { count: totalCount } = await supabase
       .from("books")
-      .select("*", { count: "exact", head: true });
+      .select("*", { count: "exact", head: true })
+      .ilike(searchOption, `%${searchTerm}%`);
 
     // 현재 페이지의 책 데이터 가져오기
     const { data: books, error } = await supabase
       .from("books")
       .select("*")
+      .ilike(searchOption, `%${searchTerm}%`)
       .range((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE - 1)
       .order("created_at", { ascending: true });
 
