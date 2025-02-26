@@ -43,7 +43,7 @@ export default function BookDetail({
         }
 
         alert("책이 삭제되었습니다.");
-        router.push("/"); // 목록 페이지로 리다이렉트
+        router.push("/");
       } catch (error) {
         console.error("Error deleting book:", error);
         alert("책 삭제 중 오류가 발생했습니다.");
