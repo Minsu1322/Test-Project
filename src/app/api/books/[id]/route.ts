@@ -2,9 +2,9 @@ import { supabase } from "@/app/supabase/supabaseClient";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
 
   const { data, error } = await supabase
     .from("books")
@@ -25,9 +25,9 @@ export async function GET(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
 
   const { error } = await supabase.from("books").delete().eq("id", id);
 

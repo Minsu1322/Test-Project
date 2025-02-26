@@ -14,18 +14,6 @@ const fetchBookDetails = async (id: string): Promise<Book> => {
   return response.json();
 };
 
-const deleteBook = async (id: string) => {
-  const response = await fetch(`/api/books/${id}`, {
-    method: "DELETE",
-  });
-
-  if (!response.ok) {
-    throw new Error("Error deleting book");
-  }
-
-  return response.json();
-};
-
 export default function BookDetail({
   params,
 }: {

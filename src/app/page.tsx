@@ -74,7 +74,6 @@ const Books: React.FC = () => {
 
   const {
     data: { books, totalCount } = { books: [], totalCount: 0 },
-    error,
     isLoading,
     refetch,
   } = useQuery({
@@ -423,7 +422,7 @@ const Books: React.FC = () => {
             )}
             {!showRegisterForm && (
               <p className="text-sm text-gray-500 bg-gray-50 p-3 rounded-lg">
-                새 책을 등록하려면 '등록하기' 버튼을 클릭하세요.
+                등록하기 버튼을 클릭하세요.
               </p>
             )}
           </div>

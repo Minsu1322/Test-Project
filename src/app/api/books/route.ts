@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const page = parseInt(searchParams.get("page") || "1", 10);
   const searchTerm = searchParams.get("searchTerm") || "";
   const searchOption = searchParams.get("searchOption") || "title";
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     // 총 책 수 가져오기
@@ -30,14 +30,17 @@ export async function GET(request: Request) {
     return NextResponse.json({ books, totalCount });
   } catch (error) {
     return NextResponse.json(
-      { message: "Error loading books" },
+      {
+        message: "Error loading books",
+        error: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }
 }
 
 export async function POST(request: Request) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     const bookData = await request.json();
@@ -74,7 +77,10 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error creating book:", error);
     return NextResponse.json(
-      { message: "Error creating book" },
+      {
+        message: "Error creating book",
+        error: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

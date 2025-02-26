@@ -1,6 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-export function createClient() {
-  return createServerComponentClient({ cookies });
+export async function createClient() {
+  return createServerComponentClient({ cookies: () => cookies() });
 }
